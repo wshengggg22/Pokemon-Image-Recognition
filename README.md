@@ -49,3 +49,6 @@ Visual Pokémon encyclopedia or classifier
 This project was developed as part of APS360 – Applied Fundamentals of Deep Learning at the University of Toronto.
 
 Special thanks to Lantian773030 for providing the Pokémon dataset used for model training.
+
+**Data Preprocessing**
+I have preprocessed the 7,000 Labeled Pokémon Dataset from Kaggle into training, validation and testing dataset with a ratio of 70%, 15%, 15%, and the split dataset can be found in the directory pokemon_split. 
