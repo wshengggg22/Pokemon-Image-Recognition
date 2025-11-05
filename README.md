@@ -24,6 +24,7 @@ Dataset: 7,000 Labeled Pokémon Dataset
 Author: Lantian773030
 
 License: For educational and research use only.
+
 All Pokémon characters and images are © Nintendo / Game Freak / The Pokémon Company.
 
 **Key Technologies**
