@@ -1,0 +1,1 @@
+A CNN-based deep learning system to identify Pokémon from images in various styles (sprites, anime, 3D). Built for APS360, this project demonstrates automated Pokémon recognition, with potential applications in digital Pokédex tools and educational games.
