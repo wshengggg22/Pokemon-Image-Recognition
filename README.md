@@ -55,3 +55,6 @@ Special thanks to Lantian773030 for providing the Pokémon dataset used for mode
 Dataset: [7,000 Labeled Pokémon Dataset](https://www.kaggle.com/datasets/lantian773030/pokemonclassification/discussion?sort=hotness)
 
 To reproduce the results, download the dataset and place it under a folder named pokemon_dataset/ in the project root. Then, run the split_dataset.py file, this will split the dataset into training, validation and testing dataset with a ratio of 70%, 15%, 15%, and the split dataset can be found in the directory "pokemon_split". 
+
+**Data Loading and Transformation**
+
