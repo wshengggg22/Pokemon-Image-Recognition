@@ -58,7 +58,13 @@ To reproduce the results, download the dataset and place it under a folder named
 
 **Data Loading and Transformation**
 
-The data_loader.py file contains a few functions that can be used to load or visualize the dataset for training, validation or test usage.
+The data_loader.py file provides functions for loading and preprocessing the Pokémon dataset.
+
+Training Data Augmentation: Applies transformations such as random rotation, horizontal flip, and color jitter to increase dataset diversity.
+
+Data Loading: Functions are available to create PyTorch DataLoader objects for training, validation, and test sets.
+
+Visualization: Includes helper functions to display sample images from the dataset, useful for verifying augmentations and preprocessing steps.
 
 
 
