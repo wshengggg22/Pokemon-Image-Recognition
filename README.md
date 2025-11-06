@@ -58,3 +58,7 @@ To reproduce the results, download the dataset and place it under a folder named
 
 **Data Loading and Transformation**
 
+The data_loader.py file contains a few functions that can be used to load or visualize the dataset for training, validation or test usage.
+
+
+
