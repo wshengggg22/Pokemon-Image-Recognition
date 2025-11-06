@@ -25,7 +25,7 @@ train_transform = transforms.Compose([
 
 # Validation and Test (no augmentation)
 test_transform = transforms.Compose([
-    transforms.Resize((224, 224)),
+    transforms.Resize(INPUT_SIZE),
     transforms.ToTensor(),
     transforms.Normalize(mean=imagenet_mean, std=imagenet_std)
 ])
@@ -65,4 +65,3 @@ if __name__ == '__main__':
     print(f"Number of classes: {len(train_data.classes)}")
 
     visualize()
-    
