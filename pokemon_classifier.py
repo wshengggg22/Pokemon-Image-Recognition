@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 from torchvision.models import resnet18, ResNet18_Weights
 from data_loader import get_data_loaders
-from config import NUM_CLASSES, LEARNING_RATE, WEIGHT_DECAY
+from config import NUM_CLASSES, LEARNING_RATE, WEIGHT_DECAY, DROPOUT_RATE
 import time
 import matplotlib.pyplot as plt
 
@@ -33,7 +33,7 @@ class PokemonClassifier(nn.Module):
         self.fc = nn.Sequential(
             nn.Linear(512, 256),
             nn.ReLU(),
-            nn.Dropout(0.5),  # add dropout
+            nn.Dropout(DROPOUT_RATE),  # add dropout
             nn.Linear(256, NUM_CLASSES)
         )
 

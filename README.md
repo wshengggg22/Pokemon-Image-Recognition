@@ -74,3 +74,7 @@ To visualize the performance of the baseline models, I computed the confusion ma
 
 ![Logistic Regression classifier CM heatmap](/Logistic%20Regression%20classifier%20CM%20heatmap.png)
 ![KNN classifier CM heatmap](/KNN%20classifier%20CM%20heatmap.png)
+
+**Primary Model**
+
+For my primary classification model (refer to "pokemon_classifier.py"), I adopted transfer learning using the pre-trained ResNet-18 CNN. Input images were resized to 224 x 224 pixels, as recommended for ResNet-18. I replaced the original final layer with a custom two-layer classifier (512 → 256 → 150) featuring ReLU activation and a 0.5 dropout for regularization. All pre-trained feature extractor weights were frozen, so only the new head was trained using Cross-Entropy Loss and the Adam optimizer with weight decay over 30 epochs.
