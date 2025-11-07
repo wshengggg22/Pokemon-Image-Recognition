@@ -72,6 +72,5 @@ I have trained two different baseline models: a logistic regression classifier a
 
 To visualize the performance of the baseline models, I computed the confusion matrices for their predictions and plotted the 50 most misclassified classes for each model as heatmaps. In these heatmaps, the diagonal light spots represent correctly classified images, while the off-diagonal cells indicate misclassifications. The heatmaps show that both baseline models struggle to accurately classify Pokémon images, highlighting the need for a more robust classifier in the primary model.
 
-![KNN classifier CM heatmap](KNN classifier CM heatmap.png)
-
-![Logistic Regression classifier CM heatmap](Logistic Regression classifier CM heatmap.png)
+![Logistic Regression classifier CM heatmap](/Logistic%20Regression%20classifier%20CM%20heatmap.png)
+![KNN classifier CM heatmap](/KNN%20classifier%20CM%20heatmap.png)
