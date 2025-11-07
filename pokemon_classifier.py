@@ -4,11 +4,12 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision.models
 from data_loader import get_data_loaders
-from config import NUM_CLASSES, LEARNING_RATE, USE_CUDA
+from config import NUM_CLASSES, LEARNING_RATE, WEIGHT_DECAY
 import time
 import matplotlib.pyplot as plt
 
 torch.manual_seed(42)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 train_loader, val_loader, test_loader = get_data_loaders()
 rn18 = torchvision.models.resnet18(pretrained=True)
@@ -29,7 +30,12 @@ class PokemonClassifier(nn.Module):
     def __init__(self):
         super(PokemonClassifier, self).__init__()
         self.feature_extractor = nn.Sequential(*list(rn18.children())[:-1])  # all layers except fc
-        self.fc = nn.Linear(512, NUM_CLASSES)
+        self.fc = nn.Sequential(
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Dropout(0.5),  # add dropout
+            nn.Linear(256, NUM_CLASSES)
+        )
 
     def forward(self, x):
         x = self.feature_extractor(x)  # shape: [batch_size, 512, 1, 1]
@@ -44,9 +50,7 @@ def get_accuracy(model, data_loader):
 
     with torch.no_grad():  # no need to compute gradients for evaluation
         for imgs, labels in data_loader:
-            if USE_CUDA and torch.cuda.is_available():
-                imgs = imgs.cuda()
-                labels = labels.cuda()
+            imgs, labels = imgs.to(device), labels.to(device)
 
             outputs = model(imgs)  # forward pass
             pred = outputs.argmax(dim=1)  # predicted class index
@@ -55,9 +59,9 @@ def get_accuracy(model, data_loader):
 
     return correct / total
 
-def train(model, train_loader, val_loader, num_epochs=10):
+def train(model, train_loader, val_loader, num_epochs=20):
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
+    optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
     iters, losses, train_accs, val_accs = [], [], [], []
     n = 0
@@ -69,9 +73,7 @@ def train(model, train_loader, val_loader, num_epochs=10):
         correct, total = 0, 0
 
         for imgs, labels in train_loader:
-            if USE_CUDA and torch.cuda.is_available():
-                imgs = imgs.cuda()
-                labels = labels.cuda()
+            imgs, labels = imgs.to(device), labels.to(device)
 
             optimizer.zero_grad()
             outputs = model(imgs)
@@ -87,7 +89,7 @@ def train(model, train_loader, val_loader, num_epochs=10):
 
             n += 1
             iters.append(n)
-            losses.append(loss.item())
+            losses.append(epoch_loss / len(train_loader))
 
         # Compute per-epoch metrics
         train_acc = correct / total
@@ -132,11 +134,15 @@ def train(model, train_loader, val_loader, num_epochs=10):
     print(f"Final Validation Accuracy: {val_accs[-1]:.4f}")
 
 if __name__ == '__main__':
-    check_feature()
+    # check_feature()
 
-    model = PokemonClassifier()
-    for param in model.feature_extractor.parameters():
+    model = PokemonClassifier().to(device)
+
+    for param in model.parameters():
         param.requires_grad = False
+
+    for param in model.fc.parameters():
+        param.requires_grad = True
 
     train_loader, val_loader, test_loader = get_data_loaders()
 

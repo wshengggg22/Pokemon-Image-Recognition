@@ -17,7 +17,7 @@ imagenet_std = [0.229, 0.224, 0.225]
 train_transform = transforms.Compose([
     transforms.Resize(INPUT_SIZE),
     transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(15),
+    transforms.RandomRotation(20),
     transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
     transforms.ToTensor(),
     transforms.Normalize(mean=imagenet_mean, std=imagenet_std)

@@ -2,7 +2,6 @@ import os
 from PIL import Image
 import numpy as np
 from tqdm import tqdm
-from sklearn.model_selection import train_test_split
 
 def extract_features(image_path, size=(64, 64), bins=16):
     """
