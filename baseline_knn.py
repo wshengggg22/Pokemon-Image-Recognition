@@ -1,11 +1,10 @@
-from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-import seaborn as sns
 from baseline_features import load_dataset
+import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Load dataset
 train_dir = 'pokemon_split/train'
 val_dir = 'pokemon_split/val'
 
@@ -15,16 +14,15 @@ X_train, y_train, class_names = load_dataset(train_dir)
 print("Extracting validation features...")
 X_val, y_val, _ = load_dataset(val_dir)
 
-# Train baseline logistic regression
-print("Training Logistic Regression model...")
-model = LogisticRegression(max_iter=1000, verbose=1)
+print("Training k-NN model...")
+model = KNeighborsClassifier(n_neighbors=5)
 model.fit(X_train, y_train)
 
 # Evaluate
 y_pred = model.predict(X_val)
+
 acc = accuracy_score(y_val, y_pred)
 print(f"Validation Accuracy: {acc * 100:.2f}%")
-
 print("\nClassification Report:")
 print(classification_report(y_val, y_pred, target_names=class_names))
 
@@ -40,9 +38,9 @@ subset_class_names = [class_names[i] for i in top50_indices]
 
 # Plot heatmap
 plt.figure(figsize=(10,8))
-sns.heatmap(cm_subset, annot=True, fmt='d', cmap='Reds',
+sns.heatmap(cm_subset, annot=True, fmt='d', cmap='Blues',
             xticklabels=subset_class_names, yticklabels=subset_class_names)
 plt.xlabel('Predicted')
 plt.ylabel('True')
-plt.title('Confusion Matrix: Top 50 Most Misclassified Classes\n (Logistic Regression)')
+plt.title('Confusion Matrix: Top 50 Most Misclassified Classes\n (k-NN)')
 plt.show()

@@ -66,5 +66,12 @@ Data Loading: Functions are available to create PyTorch DataLoader objects for t
 
 Visualization: Includes helper functions to display sample images from the dataset, useful for verifying augmentations and preprocessing steps.
 
+** Baseline Models **
 
+I have trained two different baseline models: a logistic regression classifier and a k-Nearest Neighbors (k-NN) classifier. Both models were trained on flattened pixel values and color histograms extracted from resized Pokémon images (64×64). The logistic regression classifier achieved a validation accuracy of 30.79\%, while the k-NN classifier reached 14.76\%. These results provide a reasonable non-deep-learning baseline for evaluating the performance gains achieved with CNNs. 
 
+To visualize the performance of the baseline models, I computed the confusion matrices for their predictions and plotted the 50 most misclassified classes for each model as heatmaps. In these heatmaps, the diagonal light spots represent correctly classified images, while the off-diagonal cells indicate misclassifications. The heatmaps show that both baseline models struggle to accurately classify Pokémon images, highlighting the need for a more robust classifier in the primary model.
+
+![KNN classifier CM heatmap](KNN classifier CM heatmap.png)
+
+![Logistic Regression classifier CM heatmap](Logistic Regression classifier CM heatmap.png)

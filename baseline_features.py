@@ -13,7 +13,6 @@ def extract_features(image_path, size=(64, 64), bins=16):
     image = Image.open(image_path).convert("RGB").resize(size)
     pixels = np.array(image).flatten() / 255.0  # normalize pixel values
 
-    # Color histogram
     hist_r = np.histogram(np.array(image)[:, :, 0], bins=bins, range=(0, 255))[0]
     hist_g = np.histogram(np.array(image)[:, :, 1], bins=bins, range=(0, 255))[0]
     hist_b = np.histogram(np.array(image)[:, :, 2], bins=bins, range=(0, 255))[0]
@@ -21,7 +20,6 @@ def extract_features(image_path, size=(64, 64), bins=16):
     hist = np.concatenate([hist_r, hist_g, hist_b]).astype(float)
     hist /= hist.sum()  # normalize histogram
 
-    # Combine raw pixels + color histogram
     return np.concatenate([pixels, hist])
 
 def load_dataset(folder):
