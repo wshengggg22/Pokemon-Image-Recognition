@@ -78,3 +78,8 @@ To visualize the performance of the baseline models, I computed the confusion ma
 **Primary Model**
 
 For my primary classification model (refer to "pokemon_classifier.py"), I adopted transfer learning using the pre-trained ResNet-18 CNN. Input images were resized to 224 x 224 pixels, as recommended for ResNet-18. I replaced the original final layer with a custom two-layer classifier (512 → 256 → 150) featuring ReLU activation and a 0.5 dropout for regularization. All pre-trained feature extractor weights were frozen, so only the new head was trained using Cross-Entropy Loss and the Adam optimizer with weight decay over 30 epochs.
+
+After training, the model achieved a highest 80.68\% training accuracy and 69.42\% validation accuracy at epoch 24, revealing a ~17\% generalization gap. This suggests overfitting despite existing regularization. Moving forward, I plan to tune hyperparameters such as learning rate and dropout strength, and explore additional methods to improve overall performance of the Pokémon classifier. The goal is to progressively raise the validation accuracy toward the 80–85\% range.
+
+![Training Loss Curve V1](/Training%20Loss%20Curve%20V1.png)
+![Training vs Validation Accuracy V1](/Training%20vs%20Validation%20Accuracy%20V1.png)
