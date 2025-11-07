@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-import torchvision.models
+from torchvision.models import resnet18, ResNet18_Weights
 from data_loader import get_data_loaders
 from config import NUM_CLASSES, LEARNING_RATE, WEIGHT_DECAY
 import time
@@ -12,7 +12,7 @@ torch.manual_seed(42)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 train_loader, val_loader, test_loader = get_data_loaders()
-rn18 = torchvision.models.resnet18(pretrained=True)
+rn18 = resnet18(weights=ResNet18_Weights.DEFAULT)
 
 def check_feature():
     # obtain one batch of training images
@@ -89,11 +89,14 @@ def train(model, train_loader, val_loader, num_epochs=20):
 
             n += 1
             iters.append(n)
-            losses.append(epoch_loss / len(train_loader))
+            losses.append(loss.item())
 
         # Compute per-epoch metrics
-        train_acc = correct / total
+        train_acc = get_accuracy(model, train_loader)
         val_acc = get_accuracy(model, val_loader)
+
+        model.train()  # switch back to training mode
+
         train_accs.append(train_acc)
         val_accs.append(val_acc)
         if val_acc == max(val_accs):
@@ -146,4 +149,4 @@ if __name__ == '__main__':
 
     train_loader, val_loader, test_loader = get_data_loaders()
 
-    train(model, train_loader, val_loader, num_epochs=10)
+    train(model, train_loader, val_loader, num_epochs=30)
