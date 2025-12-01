@@ -59,7 +59,7 @@ def get_accuracy(model, data_loader):
 
     return correct / total
 
-def train(model, train_loader, val_loader, num_epochs=20):
+def train(model, train_loader, val_loader, num_epochs=20, unfreeze_epoch=10, lr_after_unfreeze=5e-5):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
 
@@ -107,7 +107,7 @@ def train(model, train_loader, val_loader, num_epochs=20):
               f"Train Acc: {train_acc:.4f} "
               f"Val Acc: {val_acc:.4f} "
               f"Time: {time.time()-start_time:.2f}s")
-
+        
     end_time = time.time()
     print(f"\nTraining complete in {(end_time - start_time):.2f}s "
           f"({(end_time - start_time)/num_epochs:.2f}s per epoch)")
@@ -141,9 +141,19 @@ if __name__ == '__main__':
 
     model = PokemonClassifier().to(device)
 
+    # Freeze all layers except layer4 and classifier head
     for param in model.parameters():
         param.requires_grad = False
 
+    # Unfreeze layer4 from start
+    for param in model.feature_extractor[-1].parameters():
+        param.requires_grad = True
+
+    # Unfreeze layer3 from start
+    for param in model.feature_extractor[-2].parameters():
+        param.requires_grad = True
+
+    # Unfreeze classifier head
     for param in model.fc.parameters():
         param.requires_grad = True
 

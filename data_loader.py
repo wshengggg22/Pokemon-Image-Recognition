@@ -14,11 +14,22 @@ imagenet_mean = [0.485, 0.456, 0.406]
 imagenet_std = [0.229, 0.224, 0.225]
 
 # Data augmentation for training
+# train_transform = transforms.Compose([
+#     transforms.Resize(INPUT_SIZE),
+#     transforms.RandomHorizontalFlip(),
+#     transforms.RandomRotation(20),
+#     transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
+#     transforms.ToTensor(),
+#     transforms.Normalize(mean=imagenet_mean, std=imagenet_std)
+# ])
+
 train_transform = transforms.Compose([
-    transforms.Resize(INPUT_SIZE),
+    transforms.Resize(256),
+    transforms.RandomResizedCrop(224, scale=(0.7, 1.0)),
     transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(20),
-    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
+    transforms.RandomApply([transforms.ColorJitter(0.4,0.4,0.4,0.1)], p=0.8),
+    transforms.RandomGrayscale(p=0.05),
+    transforms.RandomApply([transforms.RandomAffine(degrees=15, translate=(0.1,0.1))], p=0.6),
     transforms.ToTensor(),
     transforms.Normalize(mean=imagenet_mean, std=imagenet_std)
 ])
