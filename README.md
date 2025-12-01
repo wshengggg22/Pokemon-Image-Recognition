@@ -89,13 +89,13 @@ For my final classification model (refer to pokemon_classifier.py), I adopted a 
 
 The model demonstrated strong performance throughout training. Over 30 epochs, the classifier reached a final training accuracy of 99.47% and a final validation accuracy of 92.98%. The highest validation accuracy achieved was 93.40% at epoch 22, indicating excellent generalization on unseen Pokémon classes. Figures below show the training loss curve and the training–validation accuracy curves, respectively. The loss decreased steadily across epochs, while the validation accuracy showed consistent improvement before stabilizing near the end of training, suggesting that the model converged well without overfitting.
 
-![Final Model Training Loss Curve](/Final Model Training Loss Curve.png)
-![Final Model Training vs Validation Accuracy](/Final Model Training vs Validation Accuracy.png)
+![Final Model Training Loss Curve](/Final%Model%Training%Loss%Curve.png)
+![Final Model Training vs Validation Accuracy](/Final%Model%Training%vs%Validation%Accuracy.png)
 
 **Qualitative Result**
 Figures below presents sample predictions from the final model on the test set (refer to "qualitative_analysis.py"), all of which were classified correctly, further supporting the high validation and test accuracies reported in the following section.
-![Sample Predictions 1](Sample Predictions 1.png)
-![Sample Predictions 2](Sample Predictions 2.png)
+![Sample Predictions 1](Sample%Predictions%1.png)
+![Sample Predictions 2](Sample%Predictions%2.png)
 
 **Model Evaluation on Test Data**
 To assess the performance of the Pokémon classifier on new, unseen data, I evaluated the model on the test set, which contains images that were not used during training or validation.
